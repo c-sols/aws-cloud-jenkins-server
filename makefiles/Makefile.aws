@@ -1,0 +1,13 @@
+AWS_CLI_IMAGE=csolutions/aws-cli:latest
+
+docker-run-aws-command:
+	@docker run --rm \
+	-v $(PWD)/server:/server \
+	--env AWS_ACCESS_KEY_ID \
+	--env AWS_SECRET_ACCESS_KEY \
+	--env AWS_DEFAULT_REGION \
+	${AWS_CLI_IMAGE} $(command)
+
+docker-create-stack:
+	@make -s docker-run-aws-command command="aws cloudformation create-stack --stack-name myteststack \
+	--template-body file://server/amazon/jenkins-server.json"
