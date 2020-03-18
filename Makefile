@@ -1,5 +1,6 @@
 workspace=$(shell pwd)
 AWS_CLI_IMAGE=csolutions/aws-cli:latest
+JENKINS_TAG_IMAGE=csolutions/jenkins:latest
 
 docker-run-aws-command:
 	@docker run --rm \
@@ -19,7 +20,7 @@ docker-run:
 	-v /var/run/docker.sock:/var/run/docker.sock \
 	-v csolutions_jenkins_data:/var/jenkins_home \
 	--name csolutions-ci --restart always \
-	${REPO_NAME}:${TAG}
+	${JENKINS_TAG_IMAGE}
 
 docker-kill:
 	@docker rm -f $$(docker ps -qa --filter name=csolutions-ci)
